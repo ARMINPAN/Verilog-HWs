@@ -1,4 +1,4 @@
-////////////2-to-1 Multiplexer
+/////////////2-to-1 Multiplexer
 `timescale 10ns / 10ps
 module MUX(in,selector,out);
 input wire [1:0]in;
