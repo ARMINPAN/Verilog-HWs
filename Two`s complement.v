@@ -5,6 +5,6 @@ module two_complement(in,out);
 
   assign out = ~in + 1;
 
-end module
+endmodule
 
 
