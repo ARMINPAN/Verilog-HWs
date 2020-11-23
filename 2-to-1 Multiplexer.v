@@ -5,5 +5,5 @@ input wire [1:0]in;
 input wire selector;
 output wire out;
 
-assign out = ~selector&in[0] + selector&in[1];
+assign out = ~selector&in[0] | selector&in[1];
 endmodule
