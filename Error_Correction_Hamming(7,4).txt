@@ -1,0 +1,82 @@
+//Even parity
+
+`timescale 1ns / 1ps
+module hamming(in,out);
+input wire [6:0]in;
+reg [6:0]inprim;
+reg [3:0]paritycheckers;
+output reg [3:0]out;
+
+always@(in)
+    begin
+        paritycheckers[0] = in[6]^in[4]^in[2]^in[0];
+        paritycheckers[1] = in[6]^in[5]^in[2]^in[1];
+        paritycheckers[2] = in[6]^in[5]^in[4]^in[3];
+        ///////////////////////////////////////
+        if(paritycheckers[0]==1 && paritycheckers[1]==1 && paritycheckers[2]==1) begin
+            inprim[6]= ~in[6];
+            break;
+        end
+        else begin
+           inprim[6]= in[6];
+           break;
+        end
+        ////// ///////////////////////////////
+        if(paritycheckers[0]==1 && paritycheckers[1]==1) begin 
+            inprim[2] = ~in[2];
+            break;
+        end
+        else begin
+           inprim[2]= in[2];
+           break;
+        end
+        if(paritycheckers[0]==1 && paritycheckers[2]==1) begin
+            inprim[4] = ~in[4];
+            break;
+        end
+        else begin
+           inprim[4]= in[4];
+           break;
+        end
+        if(paritycheckers[1]==1 && paritycheckers[2]==1) begin
+            inprim[5] = ~in[5];  
+            break;
+        end
+        else begin
+           inprim[5]= in[5];
+           break;
+        end
+        /////////////////////////////////////
+        if(paritycheckers[0]==1) begin
+            inprim[0] = ~in[0];
+            break;
+        end
+        else begin
+           inprim[0]= in[0];
+           break;
+        end
+        if(paritycheckers[1]==1) begin
+            inprim[1] = ~in[1];
+            break;
+        end
+        else begin
+           inprim[1]= in[1];
+           break;
+        end
+        if(paritycheckers[2]==1) begin
+            inprim[3] = ~in[3];
+            break;
+        end
+        else begin
+           inprim[6]= in[6];
+           break;
+        end
+        //////////////////////////////////////
+  
+        out[3] = inprim[6];
+        out[2] = inprim[5];
+        out[1] = inprim[4];
+        out[0] = inprim[2];
+    end
+
+endmodule
