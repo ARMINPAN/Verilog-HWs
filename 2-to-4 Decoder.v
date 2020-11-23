@@ -1,4 +1,5 @@
 //////////An 2-to-4 Decoder
+//////////Using assign statement
 
 `timescale 10ns / 10ps
 module Decoder(in,En,out);
