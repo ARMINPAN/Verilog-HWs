@@ -10,37 +10,37 @@ output reg greaterout,equalout,smallerout;
 
 always@(greater,equal,smaller,in1,in2)
     begin
-        if(greater==1'b1)
+        if(in1>in2)
             begin
-                greaterout = 1'b1;
-                smallerout = 1'b0;
-                equalout = 1'b0;
+                greaterout = 1;
+                smallerout = 0;
+                equalout = 0;
             end
-        if(smaller==1'b1)
+        if(in1<in2)
             begin
-                greaterout = 1'b0;
-                smallerout = 1'b1;
-                equalout = 1'b0;
+                greaterout = 0;
+                smallerout = 1;
+                equalout = 0;
             end
-        if(equal==1'b1)
+        if(in1==in2)
             begin
-                if(in1>in2)
+                if(greater == 1)
                     begin
-                        greaterout = 1'b1;
-                        smallerout = 1'b0;
-                        equalout = 1'b0;                        
+                        greaterout = 1;
+                        smallerout = 0;
+                        equalout = 0;
                     end
-                else if(in1<in2)
+                if(smaller == 1)
                     begin
-                        greaterout = 1'b0;
-                        smallerout = 1'b1;
-                        equalout = 1'b0;    
+                        greaterout = 0;
+                        smallerout = 1;
+                        equalout = 0;
                     end
-                else
+                if(equal == 1)
                     begin
-                        greaterout = 1'b0;
-                        smallerout = 1'b0;
-                        equalout = 1'b1; 
+                        greaterout = 0;
+                        smallerout = 0;
+                        equalout = 1;
                     end
             end
     end
