@@ -8,9 +8,9 @@ input wire [3:0]in1;
 input wire [3:0]in2;
 output wire greaterout,equalout,smallerout;
 
-assign equalout = (equal & (in1==in2));
-assign greaterout = (greater ? 1: (equal? (in1>in2? 1 : 0) : 0));
-assign smallerout = (smaller? 1: (equal? (in1<in2? 1 : 0) : 0));
+assign equalout = ((in1==in2) & equal);
+assign greaterout = ((in1>in2) ? 1: (in1==in2? (greater? 1 : 0) : 0));
+assign smallerout = ((in1<in2) ? 1: (in1==in2? (smaller? 1 : 0) : 0));
 
 
 endmodule
