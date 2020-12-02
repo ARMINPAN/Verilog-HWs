@@ -42,18 +42,6 @@ always@(greater,equal,smaller,in1,in2)
                         smallerout = 0;
                         equalout = 1;
                     end
-                if(greater == 1 & smaller == 1)
-                    begin
-                        greaterout = 0;
-                        smallerout = 0;
-                        equalout = 0;
-                    end
-                if(greater == 1 & smaller == 1 & equal == 1)
-                    begin
-                        greaterout = 1;
-                        smallerout = 1;
-                        equalout = 0;
-                    end
             end
     end
 
