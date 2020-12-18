@@ -12,35 +12,35 @@ module shiftregister8bit(in,out0,out1,out2,out3,out4,out5,out6,out7,Load,CLR,shi
                 begin
                     if(CLR == 1'b0 && Load == 1'b0)
                         begin
-                            out0 = in;
-                            {out7,out6,out5,out4,out3,out2,out1} = {out6,out5,out4,out3,out2,out1,out0};
+                            out0 <= in;
+                            {out7,out6,out5,out4,out3,out2,out1} <= {out6,out5,out4,out3,out2,out1,out0};
                         end
                     if(CLR == 1'b1 && Load == 1'b0)
                         begin
-                            out7 = 0'b0;
-                            out6 = 0'b0;
-                            out5 = 0'b0;
-                            out4 = 0'b0;
-                            out3 = 0'b0;
-                            out2 = 0'b0;
-                            out1 = 0'b0;
-                            out0 = 0'b0;
+                            out7 <= 0'b0;
+                            out6 <= 0'b0;
+                            out5 <= 0'b0;
+                            out4 <= 0'b0;
+                            out3 <= 0'b0;
+                            out2 <= 0'b0;
+                            out1 <= 0'b0;
+                            out0 <= 0'b0;
                         end        
                     if(CLR == 1'b1 && Load == 1'b1)    
                         begin
-                            out7 = 0'b0;
-                            out6 = 0'b0;
-                            out5 = 0'b0;
-                            out4 = 0'b0;
-                            out3 = 0'b0;
-                            out2 = 0'b0;
-                            out1 = 0'b0;
-                            out0 = 0'b0;
+                            out7 <= 0'b0;
+                            out6 <= 0'b0;
+                            out5 <= 0'b0;
+                            out4 <= 0'b0;
+                            out3 <= 0'b0;
+                            out2 <= 0'b0;
+                            out1 <= 0'b0;
+                            out0 <= 0'b0;
                         end      
                     if(CLR == 1'b0 && Load == 1'b1)
                         begin
-                            out0 = in;
-                            {out7,out6,out5,out4,out3,out2,out1,out0} = loadinput;
+                            out0 <= in;
+                            {out7,out6,out5,out4,out3,out2,out1,out0} <= loadinput;
                         end    
                 end
         end
