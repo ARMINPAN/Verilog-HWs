@@ -20,18 +20,21 @@ module Counter(loadinput,signal,CLK,Load,a,b,c,d,e,f,g);
             if(flag == 1'b0 && Load == 1'b0)    
                 begin
                     counter = 4'b0000;
+                    flag = flag + 1'b1;
                 end
             if(Load == 1'b0 && signal == 1'b0)
                 begin
                     if(counter == 4'b1001)
                         counter = 4'b0000;
-                    counter = counter + 4'b0001;
+                    else
+                        counter = counter + 4'b0001;
                 end
             if(Load == 1'b0 && signal == 1'b1)
                 begin
                     if(counter == 4'b0000)
                         counter = 4'b1001;
-                    counter = counter - 4'b0001;
+                    else
+                        counter = counter - 4'b0001;
                 end
             if(Load == 1'b1)
                 counter = loadinput;
