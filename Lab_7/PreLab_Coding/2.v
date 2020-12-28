@@ -15,7 +15,7 @@ module Counter(loadinput,signal,CLK,Load,a,b,c,d,e,f,g);
     reg flag = 1'b0;
     output reg a,b,c,d,e,f,g;
     
-    always@(posedge CLK,posedge Load)
+    always@(posedge CLK)
         begin
             if(flag == 1'b0 && Load == 1'b0)    
                 begin

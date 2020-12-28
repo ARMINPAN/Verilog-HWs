@@ -12,9 +12,12 @@ module TrafficLightCounter(CLK,a1,b1,c1,d1,e1,f1,g1,a2,b2,c2,d2,e2,f2,g2);
     output reg a1,b1,c1,d1,e1,f1,g1,a2,b2,c2,d2,e2,f2,g2;
     reg [3:0]tens;
     reg [3:0]unity;
-    reg flag = 1'b0;
+    reg [1:0]flag = 2'b00;
     reg flag2 = 1'b1;
     reg atzero = 1'b1;
+    reg [1:0]yellowcounterflash = 2'b00;
+    reg [2:0]yellowcoutner = 3'b000;
+    reg yellowlight = 1'b1;
 
     always@(posedge CLK)
         begin
@@ -24,7 +27,8 @@ module TrafficLightCounter(CLK,a1,b1,c1,d1,e1,f1,g1,a2,b2,c2,d2,e2,f2,g2);
                     unity = 4'b0010;
                     flag2 = 1'b0;
                 end
-            if(flag == 1'b0)
+            /////////////////////////////red light
+            if(flag == 2'b00)
                 begin
                     if(unity != 4'b0000)
                         begin
@@ -47,14 +51,36 @@ module TrafficLightCounter(CLK,a1,b1,c1,d1,e1,f1,g1,a2,b2,c2,d2,e2,f2,g2);
                                 begin
                                     tens = 4'b1000;
                                     unity = 4'b1000;
-                                    flag = 1'b1;
+                                    flag = 2'b11;
                                     atzero = 1'b1;
                                 end   
                             else
                                 atzero = 1'b0;
                         end  
                 end
-            if(flag == 1'b1)
+            //////////////////////yellow light
+            if(flag == 2'b01)
+                begin
+                    if(yellowcounterflash == 2'b11)
+                        begin
+                            yellowlight = 1'b1;
+                            yellowcoutner = yellowcoutner +3'b001;
+                            if(yellowcoutner == 3'b100)
+                                begin
+                                    flag = 2'b00;
+                                    yellowlight = 1'b0;
+                                    tens = 4'b0001;
+                                    unity = 4'b0010;
+                                end
+                        end
+                    else
+                        begin
+                            yellowcounterflash = yellowcounterflash + 2'b01;
+                            yellowlight = ~yellowlight;
+                        end
+                end
+            //////////////////////green light
+            if(flag == 2'b11)
                 begin
                     if(unity != 4'b0000)
                         begin
@@ -75,15 +101,16 @@ module TrafficLightCounter(CLK,a1,b1,c1,d1,e1,f1,g1,a2,b2,c2,d2,e2,f2,g2);
                         begin
                             if(atzero == 1'b0)
                                 begin
-                                    tens = 4'b0001;
-                                    unity = 4'b0010;
-                                    flag = 1'b0;
+                                    tens = 4'b0000;
+                                    unity = 4'b0000;
+                                    flag = 2'b01;
                                     atzero = 1'b1;
                                 end   
                             else
                                 atzero = 1'b0;
                         end  
                 end
+            /////////////7segs
             case(unity)
                 4'b0000: {a1,b1,c1,d1,e1,f1,g1}=7'b1111110;
                 4'b0001: {a1,b1,c1,d1,e1,f1,g1}=7'b0110000;
@@ -109,6 +136,6 @@ module TrafficLightCounter(CLK,a1,b1,c1,d1,e1,f1,g1,a2,b2,c2,d2,e2,f2,g2);
                 4'b1001: {a2,b2,c2,d2,e2,f2,g2}=7'b1110011;
             endcase
         end
-
-
 endmodule
+
+

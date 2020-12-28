@@ -6,7 +6,7 @@ module shiftregister8bit(in,out0,out1,out2,out3,out4,out5,out6,out7,Load,CLR,shi
     input wire [7:0]loadinput;
     output reg out0,out1,out2,out3,out4,out5,out6,out7;
 
-    always@(posedge CLK,posedge Load)
+    always@(posedge CLK,posedge CLR)
         begin
             if(shift == 1'b1)
                 begin
@@ -39,7 +39,6 @@ module shiftregister8bit(in,out0,out1,out2,out3,out4,out5,out6,out7,Load,CLR,shi
                         end      
                     if(CLR == 1'b0 && Load == 1'b1)
                         begin
-                            out0 <= in;
                             {out7,out6,out5,out4,out3,out2,out1,out0} <= loadinput;
                         end    
                 end
