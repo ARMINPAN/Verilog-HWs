@@ -2,6 +2,7 @@
 ///////////////we use a flag for reg and green light////if flag is 1 the light is green and if 0, red;
 ///////////////////time of green light is 88 clocks and for red light 12 clocks
 //////////////////we start from red light
+////////////////////we have yellow light in here too
 //   a   //
 //f     b//
 //   g   //   :)
