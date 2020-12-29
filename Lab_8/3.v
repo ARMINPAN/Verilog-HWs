@@ -4,10 +4,16 @@
 ///////////b c d are for three seven segments which shows the most up number in the stack
 //////////if operation is 00 we multiply/if 01 +/if 10 -;
 /////////we use Dynamic arrays for stack
+//   a   //
+//f     b//
+//   g   //   :)
+//e     c//
+//   d   //
+//////////a,b,c,d,e,f,g : sseg
 
-module Calculator(a0,a1,a2,a3,a4,a5,a6,a7,sseg1,sseg2,sseg3,operation,flagOperation,flagPush,flagdelete,flagdeleteAll);
+module Calculator(a0,a1,a2,a3,a4,a5,a6,a7,sseg1,sseg2,sseg3,ssegOut,operation,flagOperation,flagPush,flagdelete,flagdeleteAll);
     input wire a0,a1,a2,a3,a4,a5,a6,a7;
-    output reg [6:0]sseg1,sseg2,sseg3;
+    output reg [6:0]sseg1,sseg2,sseg3,ssegOut;
     input wire [1:0]operation;
     input wire flagPush,flagOperation,flagdelete,flagdeleteAll;
     reg [7:0]stack;
@@ -15,31 +21,70 @@ module Calculator(a0,a1,a2,a3,a4,a5,a6,a7,sseg1,sseg2,sseg3,operation,flagOperat
     integer counter = 0;
     reg [3:0]unity,tens,hundreds;
     integer i;
+    reg [7:0]stackArrayprime;
+
     always@(posedge flagOperation,posedge flagPush,a0,a1,a2,a3,a4,a5,a6,a7,operation,posedge flagdelete,posedge flagdeleteAll)
         begin
             stack = {a7,a6,a5,a4,a3,a2,a1,a0};
             if(flagPush == 1'b1)
                 begin
                     stackArray[counter] = stack;
+                    stackArrayprime = stackArray[counter];
                     counter = counter + 1;
                 end
             if(flagOperation == 1'b1)
                 begin
                     if(operation == 2'b00)
                         begin
-                            stackArray[counter-2] = stackArray[counter-2] * stackArray[counter-1];
+                            ///////////if  the result is negetive we find the absoulute and put a minus befor it
+                            if((stackArray[counter-2]+stackArray[counter-1]) < 0)
+                                begin
+                                    stackArray[counter-2] = stackArray[counter-2] * stackArray[counter-1];
+                                    stackArrayprime = ~(stackArray[counter-2] - 8'b00000001);
+                                    ssegOut = 7'b0000001;
+                                end
+                            else
+                                begin
+                                    ssegOut = 7'bz;
+                                    stackArray[counter-2] = stackArray[counter-2] * stackArray[counter-1];
+                                    stackArrayprime = stackArray[counter-2];
+                                end
                             stackArray[counter-1] = 8'bz;
                             counter = counter - 1;
                         end
                     if(operation == 2'b01)
                         begin
-                            stackArray[counter-2] = stackArray[counter-2] + stackArray[counter-1];
+                            ///////////if  the result is negetive we find the absoulute and put a minus befor it
+                            if((stackArray[counter-2]+stackArray[counter-1]) < 0)
+                                begin
+                                    stackArray[counter-2] = stackArray[counter-2] + stackArray[counter-1];
+                                    stackArrayprime = ~(stackArray[counter-2] - 8'b00000001);
+                                    ssegOut = 7'b0000001;
+                                end
+                            else
+                                begin
+                                    ssegOut = 7'bz;
+                                    stackArray[counter-2] = stackArray[counter-2] + stackArray[counter-1];
+                                    stackArrayprime = stackArray[counter-2];
+                                end
                             stackArray[counter-1] = 8'bz;
                             counter = counter - 1;
                         end
                     if(operation == 2'b10)
                         begin
-                            stackArray[counter-2] = stackArray[counter-2] - stackArray[counter-1];
+                            ///////////if  the result is negetive we find the absoulute and put a minus befor it
+                            if(stackArray[counter-2]<stackArray[counter-1])
+                                begin
+                                    stackArray[counter-2] = stackArray[counter-2] - stackArray[counter-1];
+                                    stackArrayprime = ~(stackArray[counter-2] - 8'b00000001);
+                                    ssegOut = 7'b0000001;
+                                end
+                            else
+                                begin
+                                    ssegOut = 7'bz;
+                                    stackArray[counter-2] = stackArray[counter-2] - stackArray[counter-1];
+                                    stackArrayprime = stackArray[counter-2];
+                                end
                             stackArray[counter-1] = 8'bz;
                             counter = counter - 1;
                         end
@@ -56,11 +101,11 @@ module Calculator(a0,a1,a2,a3,a4,a5,a6,a7,sseg1,sseg2,sseg3,operation,flagOperat
                             stackArray[i] = 8'bz;
                         end
                     counter = 0;
-                end            
+                end
             /////////////sevensegment
-            unity = stackArray[counter-1] % 10;
-            tens = (stackArray[counter-1]/10) % 10;
-            hundreds = (stackArray[counter-1]/100);
+            unity = stackArrayprime[counter-1] % 10;
+            tens = (stackArrayprime[counter-1]/10) % 10;
+            hundreds = (stackArrayprime[counter-1]/100);
             case(unity)
                 4'b0000: sseg1=7'b1111110;
                 4'b0001: sseg1=7'b0110000;
