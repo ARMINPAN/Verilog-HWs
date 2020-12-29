@@ -2,7 +2,6 @@
 ///////////////we use a flag for reg and green light////if flag is 1 the light is green and if 0, red;
 ///////////////////time of green light is 88 clocks and for red light 12 clocks
 //////////////////we start from red light
-////////////////////we have yellow light in here too
 //   a   //
 //f     b//
 //   g   //   :)
@@ -72,6 +71,8 @@ module TrafficLightCounter(CLK,a1,b1,c1,d1,e1,f1,g1,a2,b2,c2,d2,e2,f2,g2);
                                     yellowlight = 1'b0;
                                     tens = 4'b0001;
                                     unity = 4'b0010;
+                                    yellowcoutner = 3'b000;
+                                    yellowcounterflash = 2'b00;
                                 end
                         end
                     else
