@@ -37,7 +37,7 @@ module Calculator(a0,a1,a2,a3,a4,a5,a6,a7,sseg1,sseg2,sseg3,ssegOut,operation,fl
                     if(operation == 2'b00)
                         begin
                             ///////////if  the result is negetive we find the absoulute and put a minus befor it
-                            if((stackArray[counter-2]+stackArray[counter-1]) < 0)
+                            if((stackArray[counter-2]*stackArray[counter-1]) < 0)
                                 begin
                                     stackArray[counter-2] = stackArray[counter-2] * stackArray[counter-1];
                                     stackArrayprime = ~(stackArray[counter-2] - 8'b00000001);
