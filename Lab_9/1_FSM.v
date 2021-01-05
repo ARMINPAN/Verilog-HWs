@@ -1,10 +1,11 @@
 //////a FSM which counts number of 1110 in input, Mealy
 //////reset will get us to the initial state
 /////reset is active low
-module FSM(in,CLK,out,reset);
+module FSM(in,CLK,out,reset,counter,a1, b1, c1, d1, e1, f1, g1, a2, b2, c2, d2, e2, f2, g2);
     input wire in,CLK,reset;
     output reg out;
-    reg [3:0]counter;
+    output wire [3:0]counter;
+    output wire a1, b1, c1, d1, e1, f1, g1, a2, b2, c2, d2, e2, f2, g2;
     reg [1:0]NS,CS;
     parameter A = 2'b00, B = 2'b01, C = 2'b11, D = 2'b10;
 
@@ -51,7 +52,7 @@ module FSM(in,CLK,out,reset);
                             end
                         else
                             begin
-                                NS = C; 
+                                NS = D; 
                                 out = 0;                              
                             end
                 endcase
