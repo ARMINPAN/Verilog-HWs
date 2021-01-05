@@ -4,7 +4,7 @@
 module FSM(in,CLK,out,reset);
     input wire in,CLK,reset;
     output reg out;
-
+    reg [3:0]counter;
     reg [1:0]NS,CS;
     parameter A = 2'b00, B = 2'b01, C = 2'b11, D = 2'b10;
 
@@ -65,5 +65,9 @@ module FSM(in,CLK,out,reset);
                 CS <= NS;
         end
 
+    ////////////counter module
+    counter counts(.in(out), .CLK(CLK), .out(counter));
+    ///////////7segs
+    sevenSeg shows(.in(counter), .CLK(CLK), .a1(a1), .b1(b1), .c1(c1), .d1(d1), .e1(e1), .f1(f1), .g1(g1), .a2(a2), .b2(b2), .c2(c2), .d2(d2), .e2(e2), .f2(f2), .g2(g2));
 
 endmodule
