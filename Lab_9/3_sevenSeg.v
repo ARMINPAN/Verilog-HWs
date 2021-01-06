@@ -1,13 +1,14 @@
 
 module sevenSeg(in,a1,b1,c1,d1,e1,f1,g1,a2,b2,c2,d2,e2,f2,g2,CLK);
-    input wire in,CLK;
+    input wire [3:0]in;
+    input wire CLK;
     output reg a1, b1, c1, d1, e1, f1, g1, a2, b2, c2, d2, e2, f2, g2;
-    reg unity,tens;
+    reg [3:0]unity,tens;
 
     always@(posedge CLK)
         begin
             unity = in % 10;
-            tens = in / 10;
+            tens = in / (4'b1010);
             //////////////////////////////7segs
                 case(unity)
                     4'b0000: {a1, b1, c1, d1, e1, f1, g1}=7'b1111110;
